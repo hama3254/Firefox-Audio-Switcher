@@ -1,0 +1,130 @@
+
+html { box-sizing: border-box; height: 100%;width: 100%; } *, *::before, *::after { box-sizing: inherit; }
+
+body {
+  display: flex; 
+  align-items: left; 
+  justify-content: left;
+  min-height: 200px;
+  min-width: 250px
+  font-family: 'Lato', sans-serif;
+  background: #c8c8c8;
+    color: #9faab7;
+}
+
+h2 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin: 5px;
+}
+.frame_btn{
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 100%; 
+	width: 100%}
+
+.frame {
+  width: 100%;
+  background: #fff;
+  padding: 35px;
+  border-radius: 1rem;
+  background-position: center;
+}
+  
+
+.radio {
+  position: absolute;
+  top: 0.2rem;
+  left: 0;
+  height: 2.5rem;
+  width: 2.5rem;
+  background: #c9ded6;
+  border-radius: 50%;
+  &::after {
+    content: '';
+    position: absolute;
+    opacity: 0;
+    top: .5rem;
+    left: .5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: #fff;
+  }
+}
+@keyframes click-wave {
+  0% {
+    height: 40px;
+    width: 40px;
+    opacity: 0.35;
+    position: relative;
+  }
+  100% {
+    height: 200px;
+    width: 200px;
+    margin-left: -80px;
+    margin-top: -80px;
+    opacity: 0;
+  }
+}
+
+.option-input {
+  -moz-appearance: none;
+  appearance: none;
+  position: relative;
+  top: 13.33333px;
+  right: 25;
+  bottom: 0;
+  left: 25;
+  height: 30px;
+  width: 30px;
+  transition: all 0.15s ease-out 0s;
+  background: #cbd1d8;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 0.5rem;
+  outline: none;
+  z-index: 1000;
+}
+.option-input:hover {
+  background: #9faab7;
+}
+.option-input:checked {
+  background: #40e0d0;
+}
+.option-input:checked::before {
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  content: '✔';
+  display: inline-block;
+  font-size: 22.66667px;
+  text-align: center;
+  line-height: 30px;
+}
+
+.option-input:checked::after {
+  -webkit-animation: click-wave 0.65s;
+  -moz-animation: click-wave 0.65s;
+  animation: click-wave 0.65s;
+  background: #40e0d0;
+  content: '';
+  display: block;
+  position: relative;
+  z-index: 100;
+}
+.option-input.radio {
+  border-radius: 50%;
+}
+.option-input.radio::after {
+  border-radius: 50%;
+}
+
+
+body label {
+ 
+  line-height: 25px;
+}
+
