@@ -13,10 +13,19 @@ body {
 }
 
 h2 {
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: bold;
   margin: 5px;
 }
+span {
+  width:100%;
+  display:inline-block;
+  margin-bottom: 10px;
+ }
+span.align-right {
+  text-align:right;
+}
+
 .frame_btn{
 	background-position: center;
 	background-repeat: no-repeat;
