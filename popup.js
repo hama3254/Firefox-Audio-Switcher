@@ -1,3 +1,4 @@
+var selectedDevice;
 
 document.getElementById('btn_settings').addEventListener('click', () => {
     browser.tabs.create({
@@ -12,18 +13,28 @@ function InjectJS() {
     for (i = 0; i < radio_btn.length; i++) {
         if (radio_btn[i].checked) {
             //alert(radio_btn[i].value);
-            var selectedDevice = radio_btn[i].value;
+             selectedDevice = radio_btn[i].value;
             //alert("navigator.mediaDevices.enumerateDevices().then(function(devices){const audioDevices=devices.filter(device=>device.kind==='audiooutput');const audioDevicesUse=devices.filter(device=>device.label==='" + selectedDevice + "');var video=document.querySelector('video');var p2=new Promise(function(resolve,reject){video.setSinkId(audioDevicesUse[0].deviceId)});p2.then(console.log('the end'))}).catch(function(err){console.log(err.name+': '+err.message)});")
-            browser.tabs.executeScript({
+
+            let executing = browser.tabs.executeScript({
+                file: "content.js"
+            });
+            executing.then(OnChange);
+
+            //browser.tabs.executeScript({
                 code: "navigator.mediaDevices.enumerateDevices().then(function(devices){const audioDevices=devices.filter(device=>device.kind==='audiooutput');var video=document.querySelector('video');var p2=new Promise(function(resolve,reject){video.setSinkId(audioDevices[" + selectedDevice + "].deviceId)});p2.then(console.log('the end'))}).catch(function(err){console.log(err.name+': '+err.message)});"
                 //multi line code at the end as comment
 
-            });
+            //});
 
         }
     }
-    window.close()
+	
+    
 }
+
+
+
 navigator.mediaDevices.getUserMedia({
     audio: true
 })
@@ -113,29 +124,17 @@ navigator.mediaDevices.getUserMedia({
 
 });
 
-/*
+function messageTab(tabs) {
+    browser.tabs.sendMessage(tabs[0].id, {
+        replacement: selectedDevice
+    });
+}
 
-navigator.mediaDevices.enumerateDevices()
-.then(function(devices) {
-const audioDevices = devices.filter(device => device.kind === 'audiooutput');
-const audioDevicesUse = devices.filter(device => device.label=== '" + selectedDevice + "');
-var video = document.querySelector('video');
-var p2 = new Promise(
-// Resolver-Funktion kann den Promise sowohl auflösen als auch verwerfen
-// reject the promise
-function(resolve, reject) {
-video.setSinkId(audioDevicesUse[0].deviceId)
-});
-
-p2.then(
-console.log('the end')
-
-);
-})
-.catch(function(err) {
-console.log(err.name + ': ' + err.message);
-});
-
-
-
-*/
+function OnChange(result) {
+    let querying = browser.tabs.query({
+        active: true,
+        currentWindow: true
+    });
+    querying.then(messageTab);
+	window.close()
+}

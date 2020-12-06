@@ -1,22 +1,32 @@
 {
   "manifest_version": 2,
   "name": "Audio switcher",
-  "version": "0.2",
+  "version": "0.3",
 
   "description": "Audio switcher",
 
   "icons": {
-   "48": "icons/icon-48.png"
+    "64": "icons/icon-64.png"
   },
    "permissions": [
 		"activeTab"
   ],
-
+"content_scripts": [
+    {
+      "all_frames": true,
+      "matches": ["http://*/*", "https://*/*", "file:///*"],
+      "match_about_blank": true,
+      "exclude_matches": [
+        "https://plus.google.com/hangouts/*",
+        "https://hangouts.google.com/*",
+        "https://meet.google.com/*"
+      ],
+      "js": ["content.js"]
+    }
+  ],
    "browser_action": {
     "default_icon": {
-      "128": "icons/icon-128.png",
-      "48": "icons/icon-48.png",
-      "20": "icons/icon-20.png"
+      "64": "icons/icon-64.png"
     },
     "default_title": "Audio switcher",
     "default_popup": "popup.html"
